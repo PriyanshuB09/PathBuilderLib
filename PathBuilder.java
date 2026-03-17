@@ -1,5 +1,3 @@
-package frc.robot.CSPLib.ppp;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -21,7 +19,6 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
-import frc.robot.lib.BLine.*;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.util.LocalADStarAK;
 import java.util.ArrayList;
@@ -45,10 +42,10 @@ public final class PathBuilder {
 
   private static PathConstraints constraints =
       new PathConstraints(
-          Constants.DriveConstants.DRIVE_MAXVEL * 0.8,
-          Constants.DriveConstants.DRIVE_MAXACC * 0.8,
-          Constants.DriveConstants.ANGLE_MAXVEL * 0.8,
-          Constants.DriveConstants.ANGLE_MAXACC * 0.8);
+          Constants.MaxVelocity * 0.8,
+          Constants.MaxAcceleration * 0.8,
+          Constants.MaxAngularVelocity * 0.8,
+          Constants.MaxAngularAcceleration * 0.8);
 
   /**
    * A method to configure the PathBuilder class, setting it up with the Drivetrain instance.
@@ -67,14 +64,14 @@ public final class PathBuilder {
         drive::runVelocity,
         new PPHolonomicDriveController(
             new PIDConstants(
-                Constants.DriveConstants.DRIVE_PID.getP(),
-                Constants.DriveConstants.DRIVE_PID.getI(),
-                Constants.DriveConstants.DRIVE_PID.getD()),
+                Constants.DrivePID.getP(),
+                Constants.DrivePID.getI(),
+                Constants.DrivePID.getD()),
             new PIDConstants(
-                Constants.DriveConstants.ANGLE_PID.getP(),
-                Constants.DriveConstants.ANGLE_PID.getI(),
-                Constants.DriveConstants.ANGLE_PID.getD())),
-        Constants.DriveConstants.PP_CONFIG,
+                Constants.AnglePID.getP(),
+                Constants.AnglePID.getI(),
+                Constants.AnglePID.getD())),
+        Constants.RobotConfig,
         () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
         drive);
 
@@ -110,7 +107,7 @@ public final class PathBuilder {
     PPHolonomicDriveController.overrideRotationFeedback(
         () -> {
           Supplier<Rotation2d> rotationSupplier = wanted;
-          Constants.DriveConstants.ANGLE_PID.enableContinuousInput(-Math.PI, Math.PI);
+          Constants.AnglePID.enableContinuousInput(-Math.PI, Math.PI);
 
           Logger.recordOutput(
               "PathBuilder/Track Target Angle", rotationSupplier.get().getRadians());
@@ -118,14 +115,14 @@ public final class PathBuilder {
               "PathBuilder/Track Current Angle", drive.getPose().getRotation().getRadians());
 
           double omega =
-              Constants.DriveConstants.ANGLE_PID.calculate(
+              Constants.DriveConstants.AnglePID.calculate(
                       drive.getRotation().getRadians(), rotationSupplier.get().getRadians())
-                  + Constants.DriveConstants.ANGLE_PID.getSetpoint().velocity
-                      * Constants.DriveConstants.ANGLE_FF;
+                  + Constants.DriveConstants.AnglePID.getSetpoint().velocity
+                      * Constants.AngleFeedForward;
 
           if (Math.abs(drive.getRotation().getRadians() - rotationSupplier.get().getRadians())
-                  < Constants.DriveConstants.ANGLE_TOL.getRadians()
-              && Constants.DriveConstants.ANGLE_PID.getSetpoint().velocity == 0.0) omega = 0.0;
+                  < Constants.AngleTolerance.getRadians()
+              && Constants.AnglePID.getSetpoint().velocity == 0.0) omega = 0.0;
 
           return omega;
         });
@@ -187,7 +184,7 @@ public final class PathBuilder {
       throw new IllegalArgumentException("Must supply at least one Target");
     }
 
-    final double rotIndexRadius = Constants.DriveConstants.PATH_CREATION_TOL;
+    final double rotIndexRadius = Constants.PathCreationTolerance;
 
     Pose2d[] poses = new Pose2d[targets.length];
     for (int i = 0; i < targets.length; i++) poses[i] = targets[i].pose;
