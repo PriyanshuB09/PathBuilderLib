@@ -4,7 +4,7 @@ Previously, I posted about CSPPathing, our lightweight alternative to other form
 
 Using PathBuilder's AutoBuilder by passing in a PathPlannerPath is super useful, especially when you aren't dealing with having to manually make each autonomous in the GUI. However, I found PathPlannerLib was more for teams that already were using the GUI alongside the library. Classes like `RotationTarget` and `ConstraintZone` took in fractions of the entire path, which I found challenging to do without a lot of trial and error. 
 
-I created a library built on top of PathPlannerLib that allows for more control on how the robot moves. There are a few methods in PathBuilder apart from the main pathing that we use on our team. <br><br>
+I created a library called [PathBuilder](https://github.com/PriyanshuB09/PathBuilder) built on top of PathPlannerLib that allows for more control on how the robot moves. There are a few methods in PathBuilder apart from the main pathing that we use on our team. <br><br>
 
 First, `PathBuilder.configure()`. It uses our team's constants to configure AutoBuilder. Call this on robot initialization.
 
