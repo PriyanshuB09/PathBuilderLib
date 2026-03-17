@@ -177,7 +177,7 @@ public final class PathBuilder {
     }
   }
 
-  // Way too much work into this
+  // Pathing Command
 
   public static Command path(Target... targets) {
     if (targets == null || targets.length == 0) {
@@ -505,8 +505,7 @@ public final class PathBuilder {
     return new Rotation2d(dx, dy);
   }
 
-  // My own auto triggers :) very simple Commands but maintains a uniform structure through the
-  // syntax
+  // maintains a uniform structure through the syntax through triggers
 
   public static Command triggerWhenClose(
       Translation2d location, double distance, Command runnable) {
