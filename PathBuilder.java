@@ -505,10 +505,6 @@ public final class PathBuilder {
     return new Rotation2d(dx, dy);
   }
 
-  public static Command shootOnMove(DoubleSupplier RPM) {
-    return Commands.none();
-  }
-
   // My own auto triggers :) very simple Commands but maintains a uniform structure through the
   // syntax
 
