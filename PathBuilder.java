@@ -43,14 +43,6 @@ public final class PathBuilder {
 
   public static FollowPath.Builder pathBuilder;
 
-  // // Add Multiplier if too fast
-  // private static PathConstraints constraints =
-  //     new PathConstraints(
-  //         Constants.DriveConstants.DRIVE_MAXVEL * 0.6,
-  //         Constants.DriveConstants.DRIVE_MAXACC * 0.4,
-  //         Constants.DriveConstants.ANGLE_MAXVEL * 0.4,
-  //         Constants.DriveConstants.ANGLE_MAXACC * 0.4);
-
   private static PathConstraints constraints =
       new PathConstraints(
           Constants.DriveConstants.DRIVE_MAXVEL * 0.8,
