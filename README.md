@@ -1,12 +1,6 @@
 # Extending PathPlannerLib with Smarter Path Control
 
-For teams working code-first with PathPlanner, here’s a cleaner way to control and tune paths.
-
-Previously, I posted about CSPPathing, our lightweight alternative to other forms of pathfinding. But after using it for a while, I noticed that tuning our paths or slightly fixing them was really hard, especially with our team stepping away from using the PathPlanner GUI. Oftentimes, I'd write a fix for a certain section of our autonomous routine, and the robot wouldn't obey that properly, so I decided to rethink how our team creates paths. Notice, this is not pathfinding. 
-
-Using PathBuilder's AutoBuilder by passing in a PathPlannerPath is super useful, especially when you aren't dealing with having to manually make each autonomous in the GUI. However, I found PathPlannerLib was more for teams that already were using the GUI alongside the library. Classes like `RotationTarget` and `ConstraintZone` took in fractions of the entire path, which I found challenging to do without a lot of trial and error. 
-
-I created a library called [PathBuilder](https://github.com/PriyanshuB09/PathBuilder) built on top of PathPlannerLib that allows for more control on how the robot moves. There are a few methods in PathBuilder apart from the main pathing that we use on our team. <br><br>
+There are a few methods in PathBuilder apart from the main pathing that we use on our team. <br><br>
 
 First, `PathBuilder.configure()`. It uses our team's constants to configure AutoBuilder. Call this on robot initialization.
 
@@ -28,6 +22,4 @@ PathBuilder.path(
 );
 ```
 The target pose is a Pose2d, with the intended robot translation and rotation at that point. The speed multiplier is a scale factor on the robot's max velocity and max acceleration. The rotation offset is a distance in meters, where a positive value starts the rotation earlier in the path than the target pose, 0 starts the rotation immediately at the target pose, and a negative value starts the rotation later in the path. The rotation spread is a scale factor on how long the robot takes to rotate to the target's rotation. 
-
-Hope this helps!
 
