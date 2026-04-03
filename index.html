@@ -323,33 +323,60 @@
   </div>
 
   <script id='markdown-source' type='text/plain'>
-# Overview
+# PathBuilder
 
-This is a clean documentation page template.
+## Introduction
+FRC Team 4188, the Columbus Space Program, would like present PathBuilder. A custom library built on PathplannerLib, PathBuilder has several benefits and alternatives that other autonomous builders do not offer. 
 
-## Features
 
-- Modern layout
-- Clean typography
-- Code blocks and tables
-- Responsive sidebar
+| Feature | PathPlanner | PathBuilder |
+| --- | --- | --- |
+| Purpose | GUI-based full autonomous path + command system | Code-driven extension layer over PathPlannerLib |
+| Path Creation | Drag-and-drop Bezier GUI | Programmatic path construction |
+| Rotation Control | Built-in holonomic rotation + GUI control | Custom rotation pipeline (continuous PID + override feedback) |
+| Symmetry / Mirroring | Built-in GUI mirroring | Custom field-width-based mirroring + `Target` transforms |
+| Flexibility | Medium–high | Very high control over PathPlanner behavior |
+| Best Use | Fast, reliable autos for teams | Teams needing custom autonomy logic on top of PathPlanner |
 
-> Paste your own markdown here.
+With it being programmatic and command-based, you are given a lot more freedoms in creating your autonomous routine, as well as collaboration and ability to use other teams' autons.
 
-## Example
+It's easier to sequence multiple PathBuilder paths together, and with games, such as Rebuilt, that are mostly the same both left and right, you can mirror paths across the center-y line. There is a lot more customizability with different aspects that PathPlanner offers becoming much easier to implement, and fixing parts of the routine becomes a lot simpler.
 
-```js
-function hello(name) {
-  return 'Hello, ' + name + '!';
-}
+## Getting Started
+
+To add the PathBuilder vendor dependency, go into your robot project, navigate to where it asks for an input for the vendor dependency, and put this URL in:
+`https://raw.githubusercontent.com/PriyanshuB09/PathBuilderLib/refs/heads/main/pathbuilder.json`
+
+To configure PathBuilder in all of its glory, here are some methods you have to implement upon robot initialization.
+
+```java
+import frc.lib.pathbuilder.*;
+
+// required
+PathBuilder.configureDrive(
+        boolean logged,
+        double ANGLE_FF, // Best to keep it 0
+        Rotation2d angleTolerance,
+        Supplier<Pose2d> getPose,
+        Consumer<Pose2d> setPose,
+        Supplier<ChassisSpeeds> getChassisSpeeds,
+        Runnable stopDrive,
+        Consumer<ChassisSpeeds> runDrive,
+        ProfiledPIDController drivePID,
+        ProfiledPIDController anglePID,
+        RobotConfig config,
+        BooleanSupplier shouldFlip,
+        SubystemBase drive);
+
+PathBuilder.configurePathing(
+    double pathCreationTolMeters, // It won't create a Target if the Target poses are too close
+    double rotationTolRadians, // It won't create a RotationTarget if the RotationTarget rotations are too close
+    double followRotationMeters // How closely should the RotationMode.FOLLOW follow the direction of motion
+); // Only use if really need it, works best untouched
+
+// required
+PathBuilder.configureField(double widthMeters, double lengthMeters);
 ```
-
-## Table Example
-
-| Name | Value |
-| --- | --- |
-| Status | Ready |
-| Theme | Modern docs |
   </script>
 
   <script>
