@@ -241,13 +241,27 @@
     }
     .markdown-body pre code { background: transparent; padding: 0; border-radius: 0; font-size: 0.92rem; line-height: 1.65; display: block; }
     .markdown-body hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
-    .markdown-body table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 16px;
-      display: block;
-    }
+    .markdown-body .table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 0 1.05em;
+}
+
+.markdown-body table {
+  width: 100%;
+  min-width: max-content;
+  border-collapse: collapse;
+  border-radius: 16px;
+}
+
+.markdown-body th,
+.markdown-body td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+  white-space: nowrap;
+}
     .markdown-body thead { background: rgba(255,255,255,0.05); }
     .markdown-body th,
     .markdown-body td {
