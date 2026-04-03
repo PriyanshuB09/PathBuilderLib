@@ -1,9 +1,610 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>PathBuilder</title>
-  </head>
-  <body>
-    PathBuilder Documentation (Coming Soon!)
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation</title>
+  <meta name="description" content="Clean documentation page template with markdown rendering." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(15, 23, 42, 0.72);
+      --panel-2: rgba(255, 255, 255, 0.06);
+      --border: rgba(148, 163, 184, 0.18);
+      --text: #e5eefb;
+      --muted: #95a3b8;
+      --accent: #7c9cff;
+      --accent-2: #9f7aea;
+      --code-bg: #0f172a;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124, 156, 255, 0.25), transparent 28%),
+        radial-gradient(circle at top right, rgba(159, 122, 234, 0.18), transparent 24%),
+        linear-gradient(180deg, #0a0f1e 0%, #0b1020 100%);
+      min-height: 100vh;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .shell {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 30px rgba(124, 156, 255, 0.28);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      padding: 11px 14px;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+      backdrop-filter: blur(18px);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(148, 163, 184, 0.35);
+    }
+
+    .hero {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow);
+      border-radius: calc(var(--radius) + 8px);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-inner {
+      padding: 34px 34px 30px;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(124, 156, 255, 0.18), transparent 26%),
+        radial-gradient(circle at 80% 0%, rgba(159, 122, 234, 0.12), transparent 24%);
+    }
+
+    .hero h2 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+      max-width: 14ch;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 72ch;
+      font-size: 1.02rem;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 18px 34px 24px;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .meta-card {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+
+    .meta-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+    }
+
+    .meta-card strong {
+      display: block;
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+      align-items: start;
+    }
+
+    .sidebar,
+    .content {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      backdrop-filter: blur(18px);
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 18px;
+      overflow: hidden;
+    }
+
+    .sidebar .section {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar h3 {
+      margin: 0 0 8px;
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #b7c5dd;
+    }
+
+    .sidebar p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .toc {
+      list-style: none;
+      padding: 10px 8px 12px;
+      margin: 0;
+    }
+
+    .toc li a {
+      display: block;
+      padding: 10px 12px;
+      color: var(--text);
+      border-radius: 12px;
+      transition: background 0.15s ease, transform 0.15s ease;
+      font-size: 0.95rem;
+    }
+
+    .toc li a:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateX(2px);
+      text-decoration: none;
+    }
+
+    .content {
+      overflow: hidden;
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      flex-wrap: wrap;
+    }
+
+    .content-header .label {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .markdown-wrap {
+      padding: 28px 30px 34px;
+    }
+
+    .markdown-body {
+      max-width: 860px;
+      margin: 0 auto;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4,
+    .markdown-body h5,
+    .markdown-body h6 {
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      margin: 1.8em 0 0.6em;
+    }
+
+    .markdown-body h1 { font-size: 2.2rem; }
+    .markdown-body h2 { font-size: 1.65rem; }
+    .markdown-body h3 { font-size: 1.25rem; }
+
+    .markdown-body p,
+    .markdown-body ul,
+    .markdown-body ol,
+    .markdown-body blockquote,
+    .markdown-body pre,
+    .markdown-body table {
+      margin: 0 0 1.05em;
+    }
+
+    .markdown-body ul,
+    .markdown-body ol {
+      padding-left: 1.4em;
+    }
+
+    .markdown-body li + li {
+      margin-top: 0.35em;
+    }
+
+    .markdown-body blockquote {
+      border-left: 4px solid var(--accent);
+      background: rgba(124, 156, 255, 0.09);
+      padding: 14px 16px;
+      border-radius: 0 14px 14px 0;
+      color: #d9e4ff;
+    }
+
+    .markdown-body code {
+      background: rgba(255,255,255,0.08);
+      padding: 0.18em 0.4em;
+      border-radius: 8px;
+      font-size: 0.92em;
+    }
+
+    .markdown-body pre {
+      background: linear-gradient(180deg, rgba(15,23,42,0.98), rgba(15,23,42,0.94));
+      color: #e7ecff;
+      padding: 18px;
+      overflow: auto;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .markdown-body pre code {
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      display: block;
+    }
+
+    .markdown-body hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .markdown-body thead {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .markdown-body th,
+    .markdown-body td {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      white-space: nowrap;
+    }
+
+    .markdown-body img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    .markdown-body a {
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 0.18em;
+    }
+
+    .editor {
+      display: none;
+      width: 100%;
+      min-height: 420px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      padding: 18px;
+      font: inherit;
+      line-height: 1.7;
+      resize: vertical;
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .editor::placeholder {
+      color: #7f8ea9;
+    }
+
+    .footer {
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.92rem;
+      padding: 22px 0 0;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: relative; top: 0; }
+      .meta-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .shell { width: min(var(--max), calc(100% - 20px)); }
+      .hero-inner, .meta-row, .markdown-wrap { padding-left: 18px; padding-right: 18px; }
+      .content-header { padding-left: 18px; padding-right: 18px; }
+      .hero h2 { font-size: 2rem; }
+    }
+  </style>
+
+  <!-- Markdown renderer + sanitization. Replace with your own pipeline if you prefer fully offline. -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Documentation</h1>
+          <p>Clean, modern markdown docs in one file</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="toggleEditBtn" type="button">Edit Markdown</button>
+        <button class="btn" id="copyHtmlBtn" type="button">Copy Markdown</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <h2>Beautiful documentation, instantly.</h2>
+        <p>
+          Paste your markdown into the editor below, and the page will render it with a polished
+          docs-style layout, readable typography, code blocks, tables, and responsive spacing.
+        </p>
+      </div>
+
+      <div class="meta-row">
+        <div class="meta-card">
+          <span>Style</span>
+          <strong>Modern, minimal, readable</strong>
+        </div>
+        <div class="meta-card">
+          <span>Layout</span>
+          <strong>Sidebar + content</strong>
+        </div>
+        <div class="meta-card">
+          <span>Content</span>
+          <strong>Markdown-powered rendering</strong>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="section">
+          <h3>About</h3>
+          <p>Use the markdown editor or replace the sample content in the HTML with your own text.</p>
+        </div>
+        <div class="section">
+          <h3>Navigation</h3>
+          <ul class="toc" id="toc">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#example">Example</a></li>
+            <li><a href="#notes">Notes</a></li>
+          </ul>
+        </div>
+        <div class="section">
+          <h3>Tip</h3>
+          <p>Headings in your markdown automatically appear here when they are in the document body.</p>
+        </div>
+      </aside>
+
+      <main class="content">
+        <div class="content-header">
+          <div class="label">Rendered Markdown</div>
+          <div class="label" id="statusText">Live preview on</div>
+        </div>
+
+        <div class="markdown-wrap">
+          <textarea class="editor" id="markdownInput" spellcheck="false" aria-label="Markdown editor"></textarea>
+          <article class="markdown-body" id="preview"></article>
+        </div>
+      </main>
+    </div>
+
+    <div class="footer">
+      Built as a single-file template. Swap the sample markdown for your own content and you are ready to go.
+    </div>
+  </div>
+
+  <script>
+    const sampleMarkdown = `
+# Overview
+
+This is a clean documentation template built for markdown. It has strong typography, a calm color palette, and responsive spacing so your content feels polished on every screen.
+
+## Features
+
+- Beautiful headings and spacing
+- Clean code blocks
+- Tables, quotes, links, and lists
+- Mobile-friendly layout
+- Optional live editor mode
+
+> Documentation should feel effortless to read.
+
+## Example
+
+Here is a code block:
+
+\\`\\`\\`js
+function hello(name) {
+  return \\`Hello, \\${name}!\\`;
+}
+console.log(hello('world'));
+\\`\\`\\`
+
+And here is a table:
+
+| Item | Description |
+| --- | --- |
+| Markdown | Rendered beautifully |
+| Layout | Sidebar + content |
+| Theme | Dark modern docs |
+
+## Notes
+
+You can paste your markdown directly into the editor. If you want to use this as a pure static page, replace the sample content in the script with your own markdown string.
+`;
+
+    const preview = document.getElementById('preview');
+    const markdownInput = document.getElementById('markdownInput');
+    const toggleEditBtn = document.getElementById('toggleEditBtn');
+    const copyHtmlBtn = document.getElementById('copyHtmlBtn');
+    const statusText = document.getElementById('statusText');
+
+    marked.setOptions({
+      breaks: true,
+      gfm: true,
+    });
+
+    function renderMarkdown(source) {
+      const html = marked.parse(source);
+      preview.innerHTML = DOMPurify.sanitize(html);
+      updateToc();
+    }
+
+    function updateToc() {
+      const headings = preview.querySelectorAll('h1, h2, h3');
+      const toc = document.getElementById('toc');
+      const items = [];
+
+      headings.forEach((heading) => {
+        if (!heading.id) {
+          heading.id = heading.textContent.toLowerCase().trim()
+            .replace(/[^a-z0-9\s-]/g, '')
+            .replace(/\s+/g, '-');
+        }
+        items.push(`<li><a href="#${heading.id}">${heading.textContent}</a></li>`);
+      });
+
+      if (items.length) {
+        toc.innerHTML = items.join('');
+      }
+    }
+
+    markdownInput.value = sampleMarkdown.trim();
+    renderMarkdown(markdownInput.value);
+
+    markdownInput.addEventListener('input', () => {
+      renderMarkdown(markdownInput.value);
+    });
+
+    let editing = false;
+    toggleEditBtn.addEventListener('click', () => {
+      editing = !editing;
+      markdownInput.style.display = editing ? 'block' : 'none';
+      preview.style.display = editing ? 'none' : 'block';
+      toggleEditBtn.textContent = editing ? 'Preview Markdown' : 'Edit Markdown';
+      statusText.textContent = editing ? 'Editing mode' : 'Live preview on';
+      if (editing) markdownInput.focus();
+    });
+
+    copyHtmlBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(markdownInput.value);
+        copyHtmlBtn.textContent = 'Copied!';
+        setTimeout(() => (copyHtmlBtn.textContent = 'Copy Markdown'), 1200);
+      } catch {
+        copyHtmlBtn.textContent = 'Copy failed';
+        setTimeout(() => (copyHtmlBtn.textContent = 'Copy Markdown'), 1200);
+      }
+    });
+  </script>
+</body>
 </html>
