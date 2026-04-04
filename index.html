@@ -390,6 +390,88 @@ PathBuilder.configurePathing(
 // required
 PathBuilder.configureField(double widthMeters, double lengthMeters);
 ```
+
+Here's an example of `configureDrive`:
+
+```java
+PathBuilder.configureDrive(
+        true,
+        2,
+        Constants.DriveConstants.ANGLE_TOL,
+        () -> drive.getPose(),
+        drive::setPose,
+        () -> drive.getChassisSpeeds(),
+        () -> drive.stop(),
+        drive::runVelocity,
+        Constants.DriveConstants.DRIVE_PID,
+        Constants.DriveConstants.ANGLE_PID,
+        Constants.DriveConstants.PP_CONFIG,
+        () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+        drive);
+```
+    
+## Documentation
+
+To create a path following command, you have to use the `PathBuilder.path` method.
+In the method, you have to put `PathBuilder.Target` classes. The first `Target` has to be the robot's starting position, and the last `Target` has to be the robot's ending position. It is recommended to not make a path loop around itself. It is possible to convert a PathPlanner path into a path in PathBuilder as well.
+
+```java
+PathBuilder.path(
+    new PathBuilder.Target(Pose2d pose),
+    new PathBuilder.Target(Pose2d pose1),
+    new PathBuilder.Target(Pose2d pose2),
+    new PathBuilder.Target(Pose2d pose)
+);
+```
+
+PathBuilder allows for a lot of customizability, but it can become confusing if you don't spend a minute understanding when and where to use Target modifiers. There are quite a few.
+
+Most of them are self explanatory, so I'll separate them into two categories. The main ones that PathBuilder utilizes, and ones that allow for PathPlanner paths to be run on PathBuilder.
+
+You can add a modifier like this:
+
+```java
+new PathBuilder.Target(new Pose2d(0, 0, Rotation2d.kZero)).withSpeed(0.5);
+```
+
+- `.withSpeed(double)` - Scales the translational speed down by the scale factor.
+- `.withRotationSpeed(double)` - Scales the rotation speed down by the scale factor
+- `.withRotationLead(double)` - A positive value is how many meters ahead of the `Target` in the path should the robot start to rotate
+- `.withRotationSpread(double)` - Scales the length of the path the robot takes to rotate to that `Target` rotation
+- `.withRotationMode(RotationMode)` - Uses the rotation modes of `LINEAR` which is default, `SNAP` which prevents the robot from rotating until that point, `HOLD` where the robot does not respond to any `Target` rotations, `FOLLOW` where the robot's front always faces the direction of travel
+- ~`.withTangentWeight(double)`~ `.withCurve(double)` - A value between 0 and 1, where 1 is the normal Bézier spline motions, and 0 is a straight path between the two poses
+- `.onlyIf(BooleanSupplier)` - Only considers that Target if the booleanSupplier is met, if you don't include this modifier, it will always be met
+- `.withTolerance(double)` - in meters, how far can the path be off at that point (can the spline cause the robot to be off, and if so, by how much), default is 0
+- `.withCommand(Command)` - starts a command at that `Target` pose
+
+
+And then the very low-level, customizable ones:
+
+- `.withHeading(Rotation2d)` - This can be found in any waypoint, start, or end point in the PathPlanner GUI, if you cannot do a path with just PathBuilder, you can use this instead. 
+- `.withControlDistances(double, double)` - This can be found in the GUI from how far the control points are, it tell you it if you click on any waypoint
+- `.withStartingSpeed(double)` - ONLY goes on the first `PathBuilder.Target` in the path, sets the starting speed to that many MPS
+- `.withEndingSpeed(double)` - ONLY goes on the last `PathBuilder.Target` in the path, sets the ending speed to that many MPS
+- `.withOverrideRotations(RotationTarget...)` - If you want to adhere to the rotation targets in the GUI, you can override the rotations through this. However, you have to use PathPlannerLib's `RotationTarget` which takes the same input as you can see in the GUI, you can put this on any `Target` in the path, best to put it on the first one to keep track of it
+- `.withStartingRotation(Rotation2d)` - If you use `withOverrideRotations` make sure to include the starting rotation on the first `PathBuilder.Target`
+- `.withEndingRotation(Rotation2d)` - If you use `withOverrideRotations` make sure to include the ending rotation on the last `PathBuilder.Target`
+
+There are other methods in PathBuilder you can utilize too:
+
+You can auto-align to different `Translation2d` or `Rotation2d`
+```java
+Commands.runOnce(() -> PathBuilder.trackRotation(() -> Rotation2d.kZero));
+Commands.runOnce(() -> PathBuilder.trackTranslation(() -> new Translation2d(0, 0)));
+```
+
+You can also create paths using PathPlanner's AD* algorith, and merge into paths as well. You have to create a `navgrid.json` in the PathPlanner GUI, but if you have it already, you can use these methods:
+
+```java
+PathBuilder.createPath(Pose2d endPose);
+
+PathBuilder.mergeToPath(PathPlannerPath path);
+```
+
+Thank you for reading, and if you have any questions or concerns, feel free to email me at `priy.biswal@gmail.com` or submit an issue on the [GitHub](https://github.com/PriyanshuB09/PathBuilderLib).
   </script>
 
   <script>
