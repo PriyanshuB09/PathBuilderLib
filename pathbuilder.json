@@ -1,7 +1,7 @@
 {
   "fileName": "pathbuilder.json",
   "name": "PathBuilder",
-  "version": "2.1.0",
+  "version": "2.2.1",
   "frcYear": "2026",
 
   "uuid": "60632fbd-4d2a-4e73-90ad-dde201f27c48",
@@ -16,7 +16,7 @@
     {
       "groupId": "com.csplib.pathbuilder",
       "artifactId": "pathbuilder",
-      "version": "2.1.0"
+      "version": "2.2.1"
     }
   ],
 

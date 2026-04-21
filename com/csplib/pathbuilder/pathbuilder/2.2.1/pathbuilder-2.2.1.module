@@ -3,7 +3,7 @@
   "component": {
     "group": "com.csplib.pathbuilder",
     "module": "pathbuilder",
-    "version": "2.1.0",
+    "version": "2.2.1",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -25,13 +25,13 @@
       },
       "files": [
         {
-          "name": "pathbuilder-2.1.0.jar",
-          "url": "pathbuilder-2.1.0.jar",
-          "size": 62722,
-          "sha512": "c706a1cb1b526d9b5649ba3564a35a35e0941d412d295a5d8f181d71a4788a588d7b4241446bd56f8951cceca4ea07ee971d7c0f593b60c65a225d1b7e195793",
-          "sha256": "a550cdc8dfdf8a52747cbe78700d0727c95fed70d94fc3e4147649ddcc4bf8e2",
-          "sha1": "6b292850ae9c224536cbf8916764167dc11c5d59",
-          "md5": "19ac513e1d658e49773826c25b2e9b2d"
+          "name": "pathbuilder-2.2.1.jar",
+          "url": "pathbuilder-2.2.1.jar",
+          "size": 65107,
+          "sha512": "0be415c603d9933dec03c76c3f4759f088f929d3bd618cda619b74e7a1bc826887be9046de3e39816e445a4877d7e41b52505fffe149c38d9ccfaf952502e414",
+          "sha256": "1a50cc2970e688b2083897f1ef1517d7dd4f44f907ebabb6f0f3e7fe795bb57a",
+          "sha1": "115634fef78ad3efa02e488f738940c72e16cf8a",
+          "md5": "7ec3fb85ab127b77a899d8f63bf6364b"
         }
       ]
     },
@@ -195,13 +195,13 @@
       ],
       "files": [
         {
-          "name": "pathbuilder-2.1.0.jar",
-          "url": "pathbuilder-2.1.0.jar",
-          "size": 62722,
-          "sha512": "c706a1cb1b526d9b5649ba3564a35a35e0941d412d295a5d8f181d71a4788a588d7b4241446bd56f8951cceca4ea07ee971d7c0f593b60c65a225d1b7e195793",
-          "sha256": "a550cdc8dfdf8a52747cbe78700d0727c95fed70d94fc3e4147649ddcc4bf8e2",
-          "sha1": "6b292850ae9c224536cbf8916764167dc11c5d59",
-          "md5": "19ac513e1d658e49773826c25b2e9b2d"
+          "name": "pathbuilder-2.2.1.jar",
+          "url": "pathbuilder-2.2.1.jar",
+          "size": 65107,
+          "sha512": "0be415c603d9933dec03c76c3f4759f088f929d3bd618cda619b74e7a1bc826887be9046de3e39816e445a4877d7e41b52505fffe149c38d9ccfaf952502e414",
+          "sha256": "1a50cc2970e688b2083897f1ef1517d7dd4f44f907ebabb6f0f3e7fe795bb57a",
+          "sha1": "115634fef78ad3efa02e488f738940c72e16cf8a",
+          "md5": "7ec3fb85ab127b77a899d8f63bf6364b"
         }
       ]
     },
@@ -215,13 +215,13 @@
       },
       "files": [
         {
-          "name": "pathbuilder-2.1.0-sources.jar",
-          "url": "pathbuilder-2.1.0-sources.jar",
-          "size": 25137,
-          "sha512": "b5daea198de0dd193428f54fad6ff53df9433cfc000e923846338469b22d0eaf5f77efbb51e0a3570cf1e2d31e8cc6b031d127d03f736dbf54bd65b263ca8d3a",
-          "sha256": "cac58b3113cee88b01b5f8de4e974b795478cc495dcd79b972b72319a61a023e",
-          "sha1": "0208491067b2ee250894f764647d72bc195d4f60",
-          "md5": "02bc103b3973c1ab513f124992364555"
+          "name": "pathbuilder-2.2.1-sources.jar",
+          "url": "pathbuilder-2.2.1-sources.jar",
+          "size": 25494,
+          "sha512": "3cb2a15f6eac728be9103c5b94c3eb09e8b686b7faf10ca58a6d53ce0a14e03a87ecb894f3acf547f9fa84c567bd3b665a2afda5ed3936d82d0cfa92d01c64b8",
+          "sha256": "025f7bc7038efce3e69728458786720ceb1e5bd22d120039cb6af5b90944f1ef",
+          "sha1": "85f369e15069b368f5c48c9aa76f4833493b93bd",
+          "md5": "112ffb3b685f89b140eb63513d9ceb94"
         }
       ]
     }
